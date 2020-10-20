@@ -1,0 +1,19 @@
+sudo: false
+language: node_js
+node_js:
+  - lts/*
+cache: npm
+branches:
+  only:
+    - dev
+script:
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github-token: $GITHUB_TOKEN
+  target_branch: master
+  keep-history: false
+  on:
+    branch: dev
+  local-dir: dist
