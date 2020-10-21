@@ -1,16 +1,18 @@
 <template lang='pug'>
 main(@mousemove='mouseMove')
   .stage
+    Loader(:value='loadedImgCount' :total='length')
     .glow(:key='count')
     .view
       .band(:style='bandStyle')
-        img(v-for='img in imgs' :src='img')
+        img(v-for='img in imgs' :src='img' @load='loaded')
   .count {{ count }}
 
   iframe(src='https://ghbtns.com/github-btn.html?user=ngseke&repo=han-fans-eye-poke&type=star&count=false' frameborder='0' scrolling='0' width='54' height='20' title='GitHub')
 </template>
 
 <script>
+import Loader from '~/components/Loader.vue'
 import imgs from './img/*.jpg'
 const localStorageKey = 'han-fans-eye-poke-count'
 
@@ -19,10 +21,17 @@ export default {
     percentage: 0,
     popup: false,
     count: localStorage.getItem(localStorageKey) || 0,
+    loadedImgCount: 0,
   }),
+  components: {
+    Loader,
+  },
   methods: {
     mouseMove (e) {
       this.percentage = e.screenX / window.innerWidth
+    },
+    loaded () {
+      this.loadedImgCount++
     },
   },
   computed: {
