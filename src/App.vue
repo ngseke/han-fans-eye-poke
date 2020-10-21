@@ -21,10 +21,8 @@ export default {
     count: localStorage.getItem(localStorageKey) || 0,
   }),
   methods: {
-    mouseMove(e) {
-      const rect = e.target.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      this.percentage = x / e.target.offsetWidth
+    mouseMove (e) {
+      this.percentage = e.screenX / window.innerWidth
     },
   },
   computed: {
