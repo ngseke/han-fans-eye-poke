@@ -73,9 +73,9 @@ $shadow-color: white
 
 @keyframes poke
   from
-    box-shadow: 0 0 50px 0px $shadow-color
+    box-shadow: 0 0 30px 0px $shadow-color
   to
-    box-shadow: 0 0 50px 0px rgba($shadow-color, 0)
+    box-shadow: 0 0 30px 0px rgba($shadow-color, 0)
 
 =flex-center
   display: flex
@@ -101,15 +101,15 @@ main
   margin-bottom: 2rem
   .glow
     position: absolute
-    animation: poke .2s
-    border-radius: 10px
+    animation: poke .15s
+    border-radius: 5px
     width: 100%
     height: 100%
     z-index: 100
 
 .view
   overflow: hidden
-  border-radius: 10px
+  border-radius: 5px
   width: $width
   height: $height
   .band
@@ -122,4 +122,5 @@ main
   font-size: 2.5rem
   width: 100%
   text-align: center
+  margin-bottom: 1rem
 </style>
