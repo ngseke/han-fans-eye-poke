@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     mouseMove (e) {
-      this.percentage = e.screenX / window.innerWidth
+      this.percentage = e.clientX / window.innerWidth
     },
     loaded () {
       this.loadedImgCount++
