@@ -2,11 +2,11 @@
 main(@mousemove='mouseMove')
   .stage
     Loader(:value='loadedImgCount' :total='length')
-    .glow(:key='count')
+    .glow(:key='score')
     .view
       .band(:style='bandStyle')
         img(v-for='img in imgs' :src='img' @load='loaded')
-  .count {{ count }}
+  .score {{ score }}
 
   iframe(src='https://ghbtns.com/github-btn.html?user=ngseke&repo=han-fans-eye-poke&type=star&count=false' frameborder='0' scrolling='0' width='54' height='20' title='GitHub')
 </template>
@@ -14,15 +14,16 @@ main(@mousemove='mouseMove')
 <script>
 import Loader from '~/components/Loader.vue'
 import imgs from './img/*.jpg'
-const localStorageKey = 'han-fans-eye-poke-count'
+const localStorageKey = 'han-fans-eye-poke-score'
 
 export default {
-  data: () => ({
-    percentage: 0,
-    popup: false,
-    count: localStorage.getItem(localStorageKey) || 0,
-    loadedImgCount: 0,
-  }),
+  data () {
+    return {
+      percentage: 0,
+      score: this.loadScore(),
+      loadedImgCount: 0,
+    }
+  },
   components: {
     Loader,
   },
@@ -32,6 +33,13 @@ export default {
     },
     loaded () {
       this.loadedImgCount++
+    },
+    loadScore () {
+      const score = +localStorage.getItem(localStorageKey)
+      return (Number.isNaN(score)) ? 0 : score
+    },
+    saveScore (score) {
+      localStorage.setItem(localStorageKey, score)
     },
   },
   computed: {
@@ -64,12 +72,14 @@ export default {
         if ((code - tolerance <= value) && (value <= code + tolerance)) {
           if (code !== this.previousMatch) {
             this.previousMatch = code
-            this.count++
-            localStorage.setItem(localStorageKey, this.count)
+            this.score++
             return true
           }
         }
       })
+    },
+    score (score) {
+      this.saveScore(score)
     },
   },
 }
@@ -126,7 +136,7 @@ main
     flex-direction: row
     transform-origin: left center
 
-.count
+.score
   color: white
   font-size: 2.5rem
   width: 100%
