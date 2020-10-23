@@ -1,5 +1,6 @@
 <template lang='pug'>
 main(@mousemove='mouseMove' ref='main')
+  h1 {{ x }}
   .stage
     Loader(:value='loadedImgCount' :total='length')
     .glow(:key='score')
@@ -23,6 +24,7 @@ export default {
       score: this.loadScore(),
       loadedImgCount: 0,
       isMounted: false,
+      x: 0
     }
   },
   components: {
@@ -60,7 +62,7 @@ export default {
       return ~~(this.length * this.percentage) + 1
     },
     bandStyle () {
-      const width = (this.isMounted && this.$refs.main.offsetWidth < 1040) ? this.$refs.main.offsetWidth : 0
+      const width = (this.isMounted && this.$refs.main.offsetWidth < 1040) ? this.$refs.main.offsetWidth : 1040
       const x = width * -1 * this.current
       return {
         transform: `translateX(${x}px)`,
@@ -91,6 +93,17 @@ export default {
     this.isMounted = true
     this.resizeHeight()
     window.addEventListener("resize",  this.resizeHeight)
+    this.$refs.main.ontouchstart = () => {
+      const onTouchMove = (e) => {
+        this.percentage = Math.round(e.touches[0].clientX) / window.innerWidth
+      }
+      const onTouchEnd = () => {
+        this.$refs.main.ontouchmove = null
+        this.$refs.main.ontouchend = null
+      }
+      this.$refs.main.ontouchmove = onTouchMove
+      this.$refs.main.ontouchend = onTouchEnd
+    }
   }
 }
 </script>
