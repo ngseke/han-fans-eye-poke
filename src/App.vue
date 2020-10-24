@@ -1,5 +1,6 @@
 <template lang='pug'>
-main(@mousemove='mouseMove')
+main(@mousemove='mouseMove' ref='main')
+  h1 {{ x }}
   .stage
     Loader(:value='loadedImgCount' :total='length')
     .glow(:key='score')
@@ -22,6 +23,8 @@ export default {
       percentage: 0,
       score: this.loadScore(),
       loadedImgCount: 0,
+      isMounted: false,
+      x: 0
     }
   },
   components: {
@@ -41,6 +44,9 @@ export default {
     saveScore (score) {
       localStorage.setItem(localStorageKey, score)
     },
+    resizeHeight () {
+      document.body.style.height = window.innerHeight + 'px'
+    }
   },
   computed: {
     imgs () {
@@ -56,7 +62,8 @@ export default {
       return ~~(this.length * this.percentage) + 1
     },
     bandStyle () {
-      const x = -1040 * this.current
+      const width = (this.isMounted && this.$refs.main.offsetWidth < 1040) ? this.$refs.main.offsetWidth : 1040
+      const x = width * -1 * this.current
       return {
         transform: `translateX(${x}px)`,
       }
@@ -82,12 +89,26 @@ export default {
       this.saveScore(score)
     },
   },
+  mounted () {
+    this.isMounted = true
+    this.resizeHeight()
+    window.addEventListener("resize",  this.resizeHeight)
+    this.$refs.main.ontouchstart = () => {
+      const onTouchMove = (e) => {
+        this.percentage = Math.round(e.touches[0].clientX) / window.innerWidth
+      }
+      const onTouchEnd = () => {
+        this.$refs.main.ontouchmove = null
+        this.$refs.main.ontouchend = null
+      }
+      this.$refs.main.ontouchmove = onTouchMove
+      this.$refs.main.ontouchend = onTouchEnd
+    }
+  }
 }
 </script>
 
 <style lang='sass'>
-$width: 1040px
-$height: 480px
 $shadow-color: white
 
 @keyframes poke
@@ -115,26 +136,29 @@ main
 
 .stage
   position: relative
-  width: $width
-  height: $height
   margin-bottom: 2rem
+  width: 100%
+  max-width: 1040px
   .glow
     position: absolute
     animation: poke .15s
     border-radius: 5px
     width: 100%
     height: 100%
+    max-width: 1040px
     z-index: 100
 
 .view
   overflow: hidden
   border-radius: 5px
-  width: $width
-  height: $height
+  width: 100%
+  max-width: 1040px
   .band
     display: flex
     flex-direction: row
     transform-origin: left center
+    img
+      width: 100%
 
 .score
   color: white
