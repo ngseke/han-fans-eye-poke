@@ -1,6 +1,5 @@
 <template lang='pug'>
 main(@mousemove='mouseMove' ref='main')
-  h1 {{ x }}
   .stage
     Loader(:value='loadedImgCount' :total='length')
     .glow(:key='score')
@@ -24,7 +23,6 @@ export default {
       score: this.loadScore(),
       loadedImgCount: 0,
       isMounted: false,
-      x: 0
     }
   },
   components: {
