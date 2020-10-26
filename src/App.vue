@@ -60,7 +60,7 @@ export default {
       return ~~(this.length * this.percentage) + 1
     },
     bandStyle () {
-      const width = (this.isMounted && this.$refs.main.offsetWidth < 1040) ? this.$refs.main.offsetWidth : 1040
+      const width = (this.isMounted && this.$refs.main.offsetWidth < 720) ? this.$refs.main.offsetWidth : 720
       const x = width * -1 * this.current
       return {
         transform: `translateX(${x}px)`,
@@ -136,21 +136,21 @@ main
   position: relative
   margin-bottom: 2rem
   width: 100%
-  max-width: 1040px
+  max-width: 720px
   .glow
     position: absolute
     animation: poke .15s
     border-radius: 5px
     width: 100%
     height: 100%
-    max-width: 1040px
+    max-width: 720px
     z-index: 100
 
 .view
   overflow: hidden
   border-radius: 5px
   width: 100%
-  max-width: 1040px
+  max-width: 720px
   .band
     display: flex
     flex-direction: row
