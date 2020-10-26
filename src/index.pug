@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 html
+  -
+    const title = '韓粉戳眼器 | 我們會陪著又正一起監督這個爛政府 😡'
+    const desciption = '「我們會陪著又正一起監督這個爛政府 😡」—— 韓國瑜之友會(韓友會)。韓先生讓我們看到：政治人物可以把我們放在心上、可以‘講人話’，所以越來越多的人願意支持他。直到韓市長受許多民眾所託、毅然投入2020總統大選時，達到高峰。 雖然2020的總統大選韓市長敗選，但堅毅的他馬上收拾心情，回到高雄，繼續他建設一個美好家園的工作。'
+    const icon = 'favicon.png'
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='shortcut icon' href='favicon.png' type='image/png')
-    link(rel='icon' href='favicon.png' type='image/png')
-    title 我們會陪著又正一起監督這個爛政府 😡
+    link(rel='shortcut icon' href=icon type='image/png')
+    link(rel='icon' href=icon type='image/png')
+    title=title
+    meta(name='description' content=desciption)
+    meta(property='og:title' content=title)
+    meta(property='og:description' content=desciption)
+    meta(property='og:url' content='https://ngseke.github.io/han-fans-eye-poke/')
+    meta(property='og:image' content='https://i.imgur.com/VSiVC4H.png')
+    meta(property='og:width' content='512')
+    meta(property='og:height' content='512')
   body
     #app
     script(src='main.js')
