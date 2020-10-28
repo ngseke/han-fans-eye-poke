@@ -6,13 +6,14 @@ main(@mousemove='mouseMove' ref='main')
     .view
       .band(:style='bandStyle')
         img(v-for='img in imgs' :src='img' @load='loaded')
-  .score {{ score }}
+  Score.score(:value='score')
 
   iframe(src='https://ghbtns.com/github-btn.html?user=ngseke&repo=han-fans-eye-poke&type=star&count=false' frameborder='0' scrolling='0' width='54' height='20' title='GitHub')
 </template>
 
 <script>
 import Loader from '~/components/Loader.vue'
+import Score from '~/components/Score.vue'
 import imgs from './img/*.jpg'
 const localStorageKey = 'han-fans-eye-poke-score'
 
@@ -27,6 +28,7 @@ export default {
   },
   components: {
     Loader,
+    Score,
   },
   methods: {
     mouseMove (e) {
